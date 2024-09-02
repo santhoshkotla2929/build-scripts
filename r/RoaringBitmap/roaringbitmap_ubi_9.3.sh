@@ -26,17 +26,18 @@ PACKAGE_VERSION=${1:-1.2.1}
 
 
 # install tools and dependent packages
-yum install -y git wget unzip java-21-openjdk-devel
+yum install -y git wget unzip java-11-openjdk-devel
 
-export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
+#install Gradle
 GRADLE_VERSION=gradle-8.2-rc-1
-wget https://services.gradle.org/distributions/${GRADLE_VERSION}-bin.zip  && unzip -d /gradle /${GRADLE_VERSION}-bin.zip
-export GRADLE_HOME=/gradle/${GRADLE_VERSION}/ 
-# update the path env. variable
+export WORK_DIR=`pwd`
+export HOME=$WORK_DIR
+wget https://services.gradle.org/distributions/${GRADLE_VERSION}-all.zip -P /tmp && unzip -d $WORK_DIR/gradle /tmp/${GRADLE_VERSION}-all.zip
+export GRADLE_HOME=$WORK_DIR/gradle/${GRADLE_VERSION}/
 export PATH=${GRADLE_HOME}/bin:${PATH}
-
 
 
 # Cloning the repository
